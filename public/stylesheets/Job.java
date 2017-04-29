@@ -1,13 +1,17 @@
 
 public class Job {
+	String jobName;
 	String description;
 	User jobLister;
 	double cost;
 	String location;
 	String type;
 	private boolean isActive;
-	public Job(String d, User jl, double c, String l, String t, boolean a){
-		description = d; jobLister = jl; cost = c; location = l; type = t; isActive = a;
+	boolean compleated;
+	public Job(String d, User jl, double c, String l, String t,){
+		description = d; jobLister = jl; cost = c; location = l; type = t; 
+		isActive = true;
+		compleated = false;
 	}
 	public void displayDescription(){
 		System.out.println(description);

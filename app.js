@@ -34,18 +34,15 @@ var user_schema = new Schema({
 var job_schema = new Schema({
 	title: String,
 	description: String,
-	icon: String,
+	type: Number,
 	time: String,
-	price: Number
+	price: Number,
+	owner: String
 })
 var User = mongoose.model('User', user_schema);
 var Job = mongoose.model('Job', job_schema);
 
 /* passport stuff */
-/* var rests = Restaurant.find({ 'foodTypes': search_val, "zip": location_val }, function (err, restau    rants) {if (err) return handleError(err);})
- * rests.lean().exec(function(err,restaurants){
- * if (err) return console.log(err)
- * do stuff */
 
 passport.use(new Strategy(
   function(username, password, cb) {
@@ -96,6 +93,8 @@ app.use(passport.session());
 
 app.use('/', index);
 app.use('/users', users);
+
+
 /* Authentication methods */
 app.get('/isAuthenticated',
 	function(req, res) {
@@ -150,10 +149,108 @@ app.get('/logout',
 
 /* Job methods */
 /*
-app.post('/create_job', function(req, res) {
-	
-}
-*/
+var job_schema = new Schema({
+	title: String,
+	description: String,
+	type: String,
+	time: String,
+	price: Number
+})*/
+app.post('/job_create',
+	function(req, res) {
+		var job = req.body;
+		if (job.title === "" || job.description === "" || job.type === "" ||
+			job.time === "" || job.price === "") {
+			res.send("Not enough information entered");
+		}
+		Job.find({title:job.title}, function(err, jobs) {
+    		if (err) { return cb(err); }
+   		 	if (jobs.length===0) {
+				var new_guy = {};
+				new_guy.title = job.title;
+				new_guy.description = job.description;
+				new_guy.type = job.type;
+				new_guy.time = job.time;
+				new_guy.price = job.price;
+				new_guy.owner = job.owner;
+				var new_job = new Job(new_guy);
+				new_job.save(function (err, new_job) {
+					if (err) {
+						console.log("Error saving to DB");
+						return console.error(err);
+					} else {
+						console.log("saving new job");
+						res.redirect('/');
+						res.end();
+					}
+				});
+			} else {
+				res.send("Error: A job of this name already exists")
+				//res.redirect('/');
+			}	
+		});
+	}
+);
+
+app.get('/job_list',
+	function(req, res) {
+		Job.find({}, function(err, jobs) {
+    		if (err) { return cb(err); }
+   		 	if (jobs.length===0) {
+				res.send("There are no new jobs :(");
+			} else {
+				res.send(jobs);
+			}	
+		});
+	}
+);
+
+app.post('/job_find_by_title',
+	function(req, res) {
+		var job= req.body;
+		Job.find({title:job.title}, function(err, jobs) {
+    		if (err) { return cb(err); }
+   		 	if (jobs.length===0) {
+				res.send("a job of this title does not exist");
+			} else {
+				res.send(jobs[0]);
+				//res.redirect('/');
+			}
+		});
+	}
+);
+
+app.post('/job_update',
+	function(req, res) {
+		var job = req.body;
+		Job.find({title:job.title}, function(err, jobs) {
+    		if (err) { return cb(err); }
+   		 	if (jobs.length===0) {
+				res.send("error: job title does not exist");
+			} else {
+				jobs[0].title = job.title
+				jobs[0].description = job.description;
+				jobs[0].type = job.type;
+				jobs[0].time = job.time;
+				jobs[0].price = job.price;
+				jobs[0].save(function (err, updatedJob) {
+					if (err) return cb(err);
+					res.end();
+				});
+			}	
+		});
+	}
+);
+
+app.post('/job_delete',
+	function(req, res)  {
+		var job = req.body;
+		Job.findOneAndRemove({title: job.title}, function(err, gone) {
+			res.end();
+		});
+	}
+);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

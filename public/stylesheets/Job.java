@@ -12,6 +12,7 @@ public class Job {
 		description = d; jobLister = jl; cost = c; location = l; type = t; 
 		isActive = true;
 		compleated = false;
+		// TODO: Push this job to a list of total jobs across  
 	}
 	public void displayDescription(){
 		System.out.println(description);

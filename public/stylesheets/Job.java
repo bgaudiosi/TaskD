@@ -8,7 +8,7 @@ public class Job {
 	String type;
 	private boolean isActive;
 	boolean compleated;
-	public Job(String d, User jl, double c, String l, String t,){
+	public Job(String d, User jl, double c, String l, String t){
 		description = d; jobLister = jl; cost = c; location = l; type = t; 
 		isActive = true;
 		compleated = false;

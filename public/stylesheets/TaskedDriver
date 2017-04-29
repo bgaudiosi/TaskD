@@ -1,0 +1,116 @@
+package BostonHacks2017;
+
+import java.util.Scanner;
+
+public class TaskedDriver {
+
+	public static void main(String[] args) {
+		String name; 
+		String Description; 
+		boolean end = true;
+		// TODO Auto-generated method stub
+		Scanner inputScanner = new Scanner (System.in);
+		System.out.println("Enter your Name:");
+		name = inputScanner.nextLine();
+		System.out.println("Where are you from and What do you do?:");
+		Description = inputScanner.nextLine();
+		User u1 = new User(name, Description);
+		while(end){
+		System.out.println("\n\n\n\nHello " + u1.getuserName() + "!");
+		System.out.println("You have " + u1.numberOfActiveJobs + " active jobs!");
+		System.out.println("Press: \n1 - Create a New Job\n2 - See Your Active Jobs\n3 - See all Jobs(not working)\n"
+				+ "4 - Edit your profile\n-1 - Exit");
+		int menu = inputScanner.nextInt();
+		
+		switch (menu){
+		case 1: createJob(u1);
+				break;
+		case 2: seeJobs(u1);
+				break;
+		case 3: seeAllJobs(u1);
+				break;
+			
+		case 4: profile(u1);
+				break;
+				
+		
+		case -1: end = false;
+				System.exit(0);
+				break;
+		}
+		}
+		
+	}
+
+	private static void seeAllJobs(User u1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static void profile(User u1) {
+		Scanner inputScanner = new Scanner (System.in);
+		boolean end = false; 
+		
+		int menu = 0;
+		while(!end)
+		{
+			System.out.println("Name: " + u1.getuserName());
+			System.out.println("Description: " + u1.getDescription());
+			System.out.println("Edit your profile: \n1 - Edit name");
+			menu = inputScanner.nextInt();
+			switch(menu){
+			case 1: changeName(u1);
+					break;
+			case -1: return;
+				
+				
+			}
+		}
+	}
+
+	private static void changeName(User u1) {
+		String temp = "";
+		Scanner inputScanner = new Scanner (System.in);
+		System.out.println("\n\n\n\nEnter a new Name:");
+		temp = inputScanner.nextLine();
+		u1.setName(temp);
+		System.out.println("Done! Hello " + u1.getuserName() + " Press enter to continue");
+		inputScanner.nextLine();
+		inputScanner.nextLine();
+		
+	}
+
+	private static void seeJobs(User u1) {
+		Scanner inputScanner = new Scanner (System.in);
+		System.out.println("\n\n\n\nFollowing is a list of active jobs:");
+		System.out.println(u1.displayActiveJobs());
+		System.out.println("Press enter to return \n\n\n\n");
+		inputScanner.nextLine();
+
+		return;
+		
+	}
+
+	private static void createJob(User u) {
+		String description; 
+		String location;
+		String type = "n/a"; 
+		int cost; 
+		Scanner inputScanner = new Scanner (System.in);
+		System.out.println("Describe the Job:");
+		description = inputScanner.nextLine();
+		System.out.println("How much do you want?");
+		cost = inputScanner.nextInt();
+		System.out.println("Where is this job located?");
+		location = inputScanner.next();
+		System.out.println("What type of Jobs is this?");
+		type = inputScanner.next();
+		
+		Job job1 = new Job(description, u,cost, location, type, true);
+		u.beginJob(job1);
+		System.out.println("Press enter to return \n\n\n\n");
+		inputScanner.nextLine();
+		inputScanner.nextLine();
+	}
+
+}

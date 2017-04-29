@@ -5,6 +5,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+/* auth modules */
+var passport = require('passport');
+var Strategy = require('passport-local').Strategy;
+
 /* database modules */
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
@@ -36,6 +40,29 @@ var job_schema = new Schema({
 var User = mongoose.model('User', user_schema);
 var Job = mongoose.model('Job', job_schema);
 
+/* passport stuff */
+
+passport.use(new Strategy(
+  function(username, password, cb) {
+    db.users.findByUsername(username, function(err, user) {
+      if (err) { return cb(err); }
+      if (!user) { return cb(null, false); }
+      if (user.password != password) { return cb(null, false); }
+      return cb(null, user);
+    });
+  }));
+
+passport.serializeUser(function(user, cb) {
+  cb(null, user.id);
+});
+
+passport.deserializeUser(function(id, cb) {
+  db.users.findById(id, function (err, user) {
+    if (err) { return cb(err); }
+    cb(null, user);
+  });
+});
+
 /* Routes */
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -53,24 +80,30 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+
+/* More passport stuff */
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', index);
 app.use('/users', users);
 
-
-app.post('/create_job', function(req, res) {
-
-}
-
-app.post('/login', function(req, res) {
-
+app.post('/login', 
+  passport.authenticate('local', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
 });
-
+/*
 app.post('/register', function(req, res) {
 
 });
 
 
+app.post('/create_job', function(req, res) {
+
+}
+*/
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

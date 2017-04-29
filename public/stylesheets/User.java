@@ -39,9 +39,13 @@ public class User {
 	
 	
 	public void displayActiveJobs(){
-		for(Job activeJob: activeJobs){
-			System.out.println(activeJob);
+			String ret = ""; 
+
+		System.out.println("Description | Type |  Cost ($) | Location");
+		for(int i = 0; i< activeJobs.size(); i++){
+			ret += activeJobs.get(i).description + " | " + activeJobs.get(i).type + " | " + activeJobs.get(i).cost + " | " + activeJobs.get(i).location + "\n";
 		}
+		return ret;
 	}
 	public void displayPreviousJobs(){
 		for(Job previousJob: previousJobs){

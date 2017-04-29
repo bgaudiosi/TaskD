@@ -4,7 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var util = require('util');
 /* auth modules */
 var passport = require('passport');
 var Strategy = require('passport-local').Strategy;
@@ -23,6 +23,7 @@ db.once('open',
 
 var user_schema = new Schema({
 	name: String,
+	userid: String,
 	email: String,
 	password: String,
 	rating: Number,
@@ -41,26 +42,33 @@ var User = mongoose.model('User', user_schema);
 var Job = mongoose.model('Job', job_schema);
 
 /* passport stuff */
+/* var rests = Restaurant.find({ 'foodTypes': search_val, "zip": location_val }, function (err, restau    rants) {if (err) return handleError(err);})
+ * rests.lean().exec(function(err,restaurants){
+ * if (err) return console.log(err)
+ * do stuff */
 
 passport.use(new Strategy(
   function(username, password, cb) {
-    db.users.findByUsername(username, function(err, user) {
+    User.find({userid:username}, function(err, user) {
       if (err) { return cb(err); }
-      if (!user) { return cb(null, false); }
-      if (user.password != password) { return cb(null, false); }
-      return cb(null, user);
+      if (user.length===0) {console.log("user not found"); return cb(null, false); }
+      if (user[0].password != password) {console.log("bad pw"); return cb(null, false); }
+      console.log("user logged in");
+	  return cb(null, user[0]);
     });
   }));
 
 passport.serializeUser(function(user, cb) {
-  cb(null, user.id);
+  cb(null, user);
 });
 
 passport.deserializeUser(function(id, cb) {
-  db.users.findById(id, function (err, user) {
+  cb(null, id);
+		
+  /*User.find({userid:id}, function (err, user) {
     if (err) { return cb(err); }
     cb(null, user);
-  });
+  });*/
 });
 
 /* Routes */
@@ -88,20 +96,62 @@ app.use(passport.session());
 
 app.use('/', index);
 app.use('/users', users);
+/* Authentication methods */
+app.get('/isAuthenticated',
+	function(req, res) {
+		console.log(req.user);
+		res.send(req.user);
+	}
+);
 
 app.post('/login', 
-  passport.authenticate('local', { failureRedirect: '/login' }),
+  passport.authenticate('local', { failureRedirect: '/' }),
   function(req, res) {
     res.redirect('/');
 });
-/*
-app.post('/register', function(req, res) {
 
+app.post('/register', function(req, res) {
+	var reg = req.body;
+	
+	User.find({userid:reg.username}, function(err, user) {
+    	if (err) { return cb(err); }
+    	if (user.length===0) {
+			var new_guy = {};
+			new_guy.userid = reg.username;
+			new_guy.password = reg.password; // VERY UNSECURE
+			var new_user = new User(new_guy);
+			new_user.save(function (err, curr_restaurant) {
+				  if (err) {
+					  console.log("Error saving to DB");
+					  return console.error(err);
+				  }else {
+					console.log("saving new user");
+					res.redirect('/');
+					res.end();
+				  }
+
+			});
+		} else {
+			res.send("Error: username already exists")
+			//res.redirect('/');
+			
+		}
+	});
 });
 
+app.get('/logout', 
+	function(req, res) {
+		console.log("should be logging out...");
+		req.logout();
+		res.redirect('/');
+	}
+);
 
+
+/* Job methods */
+/*
 app.post('/create_job', function(req, res) {
-
+	
 }
 */
 // catch 404 and forward to error handler

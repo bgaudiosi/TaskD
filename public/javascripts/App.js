@@ -62,21 +62,6 @@ app.controller("jobController", function($scope, $http, $cookieStore, $location)
 	}, function(failure) {
 		console.log("bad call to server");
 	});
-	
-	funtion (job) { // function for when compleated 
-		if($scope.username = job.username) // unsure if this is correct, job.username?  
-		{
-			$scope.job.push(jobCompleated[]); // pushing to jobs compleated arraylist 
-		}
-		else 
-		{
-			$scope.job.push(jobTaken[]);
-		}
-		
-		
-	}
-	
-
 
 });
 

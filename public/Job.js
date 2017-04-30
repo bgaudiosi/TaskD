@@ -6,9 +6,10 @@ Job.jobLister;
 Job.cost;
 Job.location;
 Job.type;
+Job.time;
 Job.isActive;
 Job.isComplete;
-Job = function(n, sd, ld, jl, c, l, t, a, comp){
+Job = function(n, sd, ld, jl, c, l, t, time, a, comp){
     this.jobName = n;
     this.shortDescription = sd; 
     this.longDescription = ld; 
@@ -16,6 +17,7 @@ Job = function(n, sd, ld, jl, c, l, t, a, comp){
     this.cost = c;
     this.location = l;
     this.type = t;
+    this.time = time;
     this.isActive = a;
     this.isComplete = comp; 
 }
@@ -37,6 +39,9 @@ Job.displayLocation = function(){
 Job.displayType = function(){
     console.log(this.type);
 }
+Job.displayTime = function(){
+    console.log(this.time);
+}
 Job.getJobName = function(){
     return(this.jobName);
 }
@@ -57,6 +62,9 @@ Job.getLocation = function(){
 }
 Job.getType = function(){
     return(this.type);
+}
+Job.getTime = function(){
+    return(this.time);
 }
 Job.getIsActive = function(){
     return(this.isActive);
@@ -84,6 +92,9 @@ Job.setLocation = function(location){
 }
 Job.setType = function(type){
     this.type = type;
+}
+Job.setTime = function(time){
+    this.time = time;
 }
 Job.setIsActive = function(isActive){
     this.isActive = isActive;

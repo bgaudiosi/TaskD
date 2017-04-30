@@ -1,8 +1,43 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans');
 
+
+body {
+    font-size: 1rem;
+  background-color: #D9E3CD;
+  font-family: 'Nunito Sans', sans-serif;
+}
+h1 {
+    font-size: 1.2rem;
+}
+ul {
+    display: flex;
+    align-content: space-between;
+        justify-content: space-between;
+}
+li {
+    flex: 1;
+    padding: 1em;
+    display: inline;
+}
 a {
   color: #00B7FF;
+}
+input {
+    border: 1px solid gray;
+}
+.wrap {
+}
+.mainCard {
+    display: flex;
+    flex: 1;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background: white;
+    margin: 16px;
+    padding: 8px;
+}
+.jobCard {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    border: 1px solid gray;
 }

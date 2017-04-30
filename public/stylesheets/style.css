@@ -76,3 +76,33 @@ input {
 .mainCard {
     text-align: center;
 }
+
+
+/* Style the buttons that are used to open and close the accordion panel */
+button.accordion {
+    background-color: #333;
+    color: #f2f2f2;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+    text-align: center;
+  
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+button.accordion.active, button.accordion:hover {
+    background-color: #6c795c;
+    color: black;
+
+}
+
+/* Style the accordion panel. Note: hidden by default */
+.panel {
+    padding: 0 18px;
+    background-color: 9aad82;
+    display: none;
+}

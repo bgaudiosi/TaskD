@@ -10,30 +10,30 @@ var activeJobs = [];
 var previousJobs = [];
 var individualRatings;  
 
-function User(name, desc){
+User = function (name, desc){
     this.userName = name; 
     this.userDescription;
     //constructure - name and desction 
 }
-function setPhoneNumber(number){
+User.setPhoneNumber = function (number){
     this.phoneNumber=number;
 }
-function getPhoneNumber() {
+User.getPHoneNumber = function () {
     return this.phoneNumber;
 }
-function setNames(name){
+User.setNames = function(name){
     this.userName = name;
 }
-function getUserName(){
+User.getUserName = function (){
     return this.userName;
 }
-function setDescription(descrip){
+User.setDescription = function (descrip){
    this.userDescription = descrip
 }
-function getDescription(){
+User.getDescription = function (){
     return this.userDescription;
 }
-function getRating(){
+User.getRating = function (){
     var sum = 0;
 		for(var i = 0; i<individualRatings.size; i++)
         {
@@ -42,7 +42,7 @@ function getRating(){
         sum = sum / individualRatings.size; //unsure if this is correct 
 
 }
-function displayActiveJobs(){ // need to modify this to fit with new view  
+User.displayActiveJobs = function (){ // need to modify this to fit with new view  
    /* String ret = ""; 
 
 		System.out.println("Description | Type |  Cost ($) | Location");
@@ -52,21 +52,21 @@ function displayActiveJobs(){ // need to modify this to fit with new view
 		return ret;
         */
 }
-function displayPreviousJobs(){ // need to modify this to fit with new view 
+User.displayPreviousJobs = function (){ // need to modify this to fit with new view 
 /*
     for(Job previousJob: previousJobs){
 			System.out.println(previousJob);
 		}
         */
 }
-function beginJob(job){
+User.beginJob = function (job){
     activeJobs.push(job);
     numberOfActiveJobs++;
 }
-function finishJob(job){
+User. finishJob = function (job){
     activeJobs.pop(job);
     previousJobs.push(job);
     numberOfActiveJobs--;
 }
 
-console.log("sid");
+

@@ -214,6 +214,22 @@ app.get('/user_data',
 	}
 );
 
+app.post('/user_specific',
+	function(req,res) {
+		var person = req.body;
+		User.find({userid: person.username}, function(err, user) {
+			if (err) { return cb(err); }
+			if (user.length===0) {
+				res.redirect('/');
+				return;
+			} else {
+				res.send(user[0]);
+				res.end();
+			}
+		});
+	}
+);
+
 
 /* Job methods */
 /*
@@ -342,7 +358,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
 /* 
  * takes a code, and a callback function for use with async waterfall
  * calls Citi endpoint to exchange a code for an access token.

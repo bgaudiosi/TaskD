@@ -18,7 +18,7 @@ var app = angular
 			})
 			
 
-			.when('/profile', {
+			.when('/profile/:USER', {
 				controller: 'profileController',
 				templateUrl: 'profile.html',
 			})
@@ -55,12 +55,13 @@ var app = angular
 app.controller("jobController", function($scope, $http, $cookieStore, $location) {
 	$scope.jobs = [];
 	$scope.myJobs = [];
+	$scope.user="";
 	$http.get('/user_data').then(function(user_info) {
-		var user = user_info.data.userid;
+		$scope.user = user_info.data.userid;
 		$http.get('/job_list').then(function(success) {
 			var jobList = success.data;
 			for (var i = 0; i <jobList.length; i++) {
-				if (jobList[i].owner === user) {
+				if (jobList[i].owner === $scope.user) {
 					$scope.myJobs.push(jobList[i]);
 				} else {
 					$scope.jobs.push(jobList[i]);
@@ -79,21 +80,40 @@ app.controller("loginController", function($scope, $http, $cookieStore, $locatio
 	
 });
 
-app.controller("profileController", function($scope, $http, $cookieStore) {
-	$http.get('/user_data').then(function(success) {
-		console.log(success.data);
-		$scope.username = success.data.userid;
-		$scope.name = success.data.name;
-		$scope.location = success.data.location;
-		if (success.data.description === undefined) {
-			$scope.description = "Tell us about yourself...";
-		} else {
-			console.log("why in here");
-			console.log(success.data.description);
-			$scope.description = success.data.description;
-		}
-	}, function(failure) {
-		console.log("something is wrong");
-	});
-	 
+app.controller("profileController", function($scope,$location,$route, $routeParams,$http, $cookieStore) {
+	$scope.USER = ($location.path()).substring(9);
+	/*if (USER === "") {
+			$http.get('/user_data').then(function(success) {
+			console.log(success.data);
+			$scope.username = success.data.userid;
+			$scope.name = success.data.name;
+			$scope.location = success.data.location;
+			if (success.data.description === undefined) {
+				$scope.description = "Tell us about yourself...";
+			} else {
+				console.log("why in here");
+				console.log(success.data.description);
+				$scope.description = success.data.description;
+			}
+		}, function(failure) {
+			console.log("something is wrong");
+		});
+	} else {*/
+		var send = {username: $scope.USER}
+		$http.post('/user_specific', send).then(function(success) {
+			console.log(success.data);
+			$scope.username = success.data.userid;
+			$scope.name = success.data.name;
+			$scope.location = success.data.location;
+			if (success.data.description === undefined) {
+				$scope.description = "Hi, contact me at 617-123-4567 for more information.";
+			} else {
+				console.log("why in here");
+				console.log(success.data.description);
+				$scope.description = success.data.description;
+			}
+		}, function(failure) {
+			console.log("wrong");
+		});
+	//}
 });

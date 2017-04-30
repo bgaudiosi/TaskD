@@ -26,7 +26,7 @@ var user_schema = new Schema({
 	userid: String,
 	email: String,
 	password: String,
-	rating: Number,
+	rating: String,
 	location: String,
 	description: String
 })
@@ -34,9 +34,9 @@ var user_schema = new Schema({
 var job_schema = new Schema({
 	title: String,
 	description: String,
-	type: Number,
+	type: String,
 	time: String,
-	price: Number,
+	price: String,
 	owner: String
 })
 var User = mongoose.model('User', user_schema);
@@ -117,6 +117,7 @@ app.post('/register', function(req, res) {
     	if (user.length===0) {
 			var new_guy = {};
 			new_guy.userid = reg.username;
+			new_guy.email = reg.email;
 			new_guy.password = reg.password; // VERY UNSECURE
 			var new_user = new User(new_guy);
 			new_user.save(function (err, curr_restaurant) {
@@ -172,7 +173,7 @@ app.post('/job_create',
 				new_guy.type = job.type;
 				new_guy.time = job.time;
 				new_guy.price = job.price;
-				new_guy.owner = job.owner;
+				new_guy.owner = req.user.username;
 				var new_job = new Job(new_guy);
 				new_job.save(function (err, new_job) {
 					if (err) {
@@ -180,6 +181,7 @@ app.post('/job_create',
 						return console.error(err);
 					} else {
 						console.log("saving new job");
+						
 						res.redirect('/');
 						res.end();
 					}
@@ -246,7 +248,9 @@ app.post('/job_delete',
 	function(req, res)  {
 		var job = req.body;
 		Job.findOneAndRemove({title: job.title}, function(err, gone) {
-			res.end();
+			console.log("deleted??");
+			
+			res.redirect('/');
 		});
 	}
 );

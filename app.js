@@ -116,6 +116,8 @@ app.post('/register', function(req, res) {
     	if (err) { return cb(err); }
     	if (user.length===0) {
 			var new_guy = {};
+			new_guy.name = reg.name;
+			new_guy.location = reg.location;
 			new_guy.userid = reg.username;
 			new_guy.email = reg.email;
 			new_guy.password = reg.password; // VERY UNSECURE

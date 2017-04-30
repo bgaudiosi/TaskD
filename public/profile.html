@@ -5,16 +5,18 @@
 		<title>TaskD - Make some $$$, spend some $$$</title>
 	</head>
 	<body>
+		<div class = "topNav">
 		<ul class="nav">
 			<li><a href="#/jobs">Jobs</a></li>
 			<li><a href="#/profile">Profile</a></li>
 			<li><a href="/logout">Logout</a></li>
 		</ul>
-		<div class ="user-info"> 
+		</div>
+		<div class="user-info">
+		<h4 class= "user-header"> Hello {{ name }} </h4>
 		<p>{{ username }}</p>
-		<p>{{ name }}</p>
 		<p>{{ location }}</p>
 		<p>{{ description }}</p>
-			     </div>
+		</div>
 	</body>
 </html>

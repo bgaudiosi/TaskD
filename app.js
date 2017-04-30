@@ -141,9 +141,14 @@ app.post('/register', function(req, res) {
 
 app.get('/logout', 
 	function(req, res) {
-		console.log("should be logging out...");
 		req.logout();
 		res.redirect('/');
+	}
+);
+
+app.get('/user_data',
+	function(req, res) {
+		res.send(req.user);
 	}
 );
 
@@ -162,7 +167,8 @@ app.post('/job_create',
 		var job = req.body;
 		if (job.title === "" || job.description === "" || job.type === "" ||
 			job.time === "" || job.price === "") {
-			res.send("Not enough information entered");
+			res.redirect('/');
+			return;
 		}
 		Job.find({title:job.title}, function(err, jobs) {
     		if (err) { return cb(err); }
@@ -173,15 +179,15 @@ app.post('/job_create',
 				new_guy.type = job.type;
 				new_guy.time = job.time;
 				new_guy.price = job.price;
-				new_guy.owner = req.user;
-				console.log("job crator = " + new_guy.owner);
+				new_guy.owner = req.user.userid;
+				console.log("req.user = " + req.user);
 				var new_job = new Job(new_guy);
 				new_job.save(function (err, new_job) {
 					if (err) {
 						console.log("Error saving to DB");
 						return console.error(err);
 					} else {
-						console.log("saving new job");
+						
 						
 						res.redirect('/');
 						res.end();
@@ -200,10 +206,8 @@ app.get('/job_list',
 		Job.find({}, function(err, jobs) {
     		if (err) { return cb(err); }
    		 	if (jobs.length===0) {
-				console.log("mad");
 				res.end();
 			} else {
-				console.log("jobs are " + jobs);
 				res.send(jobs);
 				res.end();
 			}	

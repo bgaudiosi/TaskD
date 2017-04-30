@@ -72,18 +72,6 @@ app.controller("loginController", function($scope, $http, $cookieStore, $locatio
 });
 
 app.controller("profileController", function($scope, $http, $cookieStore) {
-	$scope.name = "not set";
-	$scope.loc = "not set";
-	$scope.profilePic = "err";
-	// NYI
-	/*$http.get('/user').then(function(success) {
-		console.log("success!");
-		console.log(success);
-		$scope.name = success.data.name;
-		$scope.loc = success.data.location;
-		$scope.profilePic = success.data.profileUrl;
-	}, function(failure) {
-		console.log(failure);
-	});
-	*/ 
+	
+	 
 });

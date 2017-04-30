@@ -1,0 +1,72 @@
+var User = {};
+
+User.userName;
+User.userDescription;
+User.numberOfActiveJobs;
+User.phoneNumber;
+User.overallRating;
+User.numberOfRatings; 
+var activeJobs = [];
+var previousJobs = [];
+var individualRatings;  
+
+function User(name, desc){
+    this.userName = name; 
+    this.userDescription;
+    //constructure - name and desction 
+}
+function setPhoneNumber(number){
+    this.phoneNumber=number;
+}
+function getPhoneNumber() {
+    return this.phoneNumber;
+}
+function setNames(name){
+    this.userName = name;
+}
+function getUserName(){
+    return this.userName;
+}
+function setDescription(descrip){
+   this.userDescription = descrip
+}
+function getDescription(){
+    return this.userDescription;
+}
+function getRating(){
+    var sum = 0;
+		for(var i = 0; i<individualRatings.size; i++)
+        {
+            sum += individualRatings[i];
+        }
+        sum = sum / individualRatings.size; //unsure if this is correct 
+
+}
+function displayActiveJobs(){ // need to modify this to fit with new view  
+   /* String ret = ""; 
+
+		System.out.println("Description | Type |  Cost ($) | Location");
+		for(int i = 0; i< activeJobs.size(); i++){
+			ret += activeJobs.get(i).shortDescription + " | " + activeJobs.get(i).type + " | " + activeJobs.get(i).cost + " | " + activeJobs.get(i).location + "\n";
+		}
+		return ret;
+        */
+}
+function displayPreviousJobs(){ // need to modify this to fit with new view 
+/*
+    for(Job previousJob: previousJobs){
+			System.out.println(previousJob);
+		}
+        */
+}
+function beginJob(job){
+    activeJobs.push(job);
+    numberOfActiveJobs++;
+}
+function finishJob(job){
+    activeJobs.pop(job);
+    previousJobs.push(job);
+    numberOfActiveJobs--;
+}
+
+console.log("sid");

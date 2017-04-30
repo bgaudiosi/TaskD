@@ -36,11 +36,11 @@ var app = angular
 				// redirect to login page if not logged in and trying to access a restricted page
 				console.log("changing page");
 				
-				/*var restrictedPage = ['/welcome'].indexOf($location.path()) === -1;
+				var restrictedPage = ['/welcome'].indexOf($location.path()) === -1;
 				if (restrictedPage) {
 					$http.get('/isAuthenticated').then(function(success) {
 						if (success.data === "") {
-							$location.path('/login');
+							$location.path('/welcome');
 						} else {
 							console.log("you are logged in");
 						}
@@ -48,11 +48,20 @@ var app = angular
 						console.log("ruh roh shaggy");
 					});
 				}
-				*/
+				
 			});
 		}]);
 
 app.controller("jobController", function($scope, $http, $cookieStore, $location) {
+	$scope.jobs = [];
+	$http.get('/job_list').then(function(success) {
+		var jobList = success.data;
+		for (var i = 0; i <jobList.length; i++) {
+			$scope.jobs.push(jobList[i]);
+		}
+	}, function(failure) {
+		console.log("bad call to server");
+	});
 
 
 });
@@ -66,8 +75,8 @@ app.controller("profileController", function($scope, $http, $cookieStore) {
 	$scope.name = "not set";
 	$scope.loc = "not set";
 	$scope.profilePic = "err";
-	
-	$http.get('/user').then(function(success) {
+	// NYI
+	/*$http.get('/user').then(function(success) {
 		console.log("success!");
 		console.log(success);
 		$scope.name = success.data.name;
@@ -76,4 +85,5 @@ app.controller("profileController", function($scope, $http, $cookieStore) {
 	}, function(failure) {
 		console.log(failure);
 	});
+	*/ 
 });

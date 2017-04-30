@@ -173,7 +173,8 @@ app.post('/job_create',
 				new_guy.type = job.type;
 				new_guy.time = job.time;
 				new_guy.price = job.price;
-				new_guy.owner = req.user.username;
+				new_guy.owner = req.user;
+				console.log("job crator = " + new_guy.owner);
 				var new_job = new Job(new_guy);
 				new_job.save(function (err, new_job) {
 					if (err) {
@@ -199,9 +200,12 @@ app.get('/job_list',
 		Job.find({}, function(err, jobs) {
     		if (err) { return cb(err); }
    		 	if (jobs.length===0) {
-				res.send("There are no new jobs :(");
+				console.log("mad");
+				res.end();
 			} else {
+				console.log("jobs are " + jobs);
 				res.send(jobs);
+				res.end();
 			}	
 		});
 	}

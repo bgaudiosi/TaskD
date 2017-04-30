@@ -16,6 +16,13 @@
 		<h1>Here are the current jobs:</h1>
 		<div id="feed">
 			<table>
+				<tr>
+					<td>Title</td>
+					<td>Description</td>
+					<td>Time</td>
+					<td>Price</td>
+					<td>Owner</td>
+				</tr>
 				<tr class="list-group-item" ng-repeat="current in jobs">
 					<td>{{ current.title }}</td>
 					<td>{{ current.description }}</td>
@@ -35,6 +42,10 @@
 				<div>
 					<label>Description:</label>
 					<input type="text" name="description"/><br/>
+				</div>
+				<div>
+					<label>Time:</label>
+					<input type="text" name="time"/><br/>
 				</div>
 				<div>
 					<label>Type:</label>

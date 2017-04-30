@@ -54,15 +54,24 @@ var app = angular
 
 app.controller("jobController", function($scope, $http, $cookieStore, $location) {
 	$scope.jobs = [];
-	$http.get('/job_list').then(function(success) {
-		var jobList = success.data;
-		for (var i = 0; i <jobList.length; i++) {
-			$scope.jobs.push(jobList[i]);
-		}
+	$scope.myJobs = [];
+	$http.get('/user_data').then(function(user_info) {
+		var user = user_info.data.userid;
+		$http.get('/job_list').then(function(success) {
+			var jobList = success.data;
+			for (var i = 0; i <jobList.length; i++) {
+				if (jobList[i].owner === user) {
+					$scope.myJobs.push(jobList[i]);
+				} else {
+					$scope.jobs.push(jobList[i]);
+				}
+			}
+		}, function(failure) {
+			console.log("bad call to server");
+		});
 	}, function(failure) {
-		console.log("bad call to server");
+		console.log("server down");
 	});
-
 });
 
 app.controller("loginController", function($scope, $http, $cookieStore, $location) {

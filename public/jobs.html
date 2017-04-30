@@ -43,8 +43,18 @@
 
 			</table>
 		</div>
-            </div>
-        			<h3>Create Job</h3>
+	</div>
+		<h3>My Jobs</h3>
+        <ul class="list-group-item" ng-repeat="current in myJobs">                <div class="jobCard">
+					<li>{{ current.title }}</li>
+					<li>{{ current.description }}</li>
+					<li>{{ current.time }} </li>
+					<li>{{ current.price }} </li>
+                                    </div>
+
+				</ul>
+		
+		<h3>Create Job</h3>
 
         <div class="mainCard">
 		<div id="create">

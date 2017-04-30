@@ -1,43 +1,14 @@
 <!--DOCTYPE html-->
-<html>
+<html ng-app="taskd">
 	<head>
 		<title>TaskD</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-cookies.min.js"></script>
+		<script src="javascripts/App.js"></script>
+			
 	</head>
 	<body>
-		<h1>Welcome to TaskD</h1>
-		<h3>Register</h3>
-			<form action="/register" method="post">
-				<div>
-					<label>Username:</label>
-					<input type="text" name="username"/><br/>
-				</div>
-				<div>
-					<label>Password:</label>
-					<input type="password" name="password"/>
-				</div>
-				<div>
-					<input type="submit" value="Submit"/>
-				</div>
-			</form>
-		</br>
-		<h3>Login</h3>
-		<form action="/login" method="post">
-			<div>
-				<label>Username:</label>
-				<input type="text" name="username"/><br/>
-			</div>
-			<div>
-				<label>Password:</label>
-				<input type="password" name="password"/>
-			</div>
-			<div>
-				<input type="submit" value="Submit"/>
-			</div>
-		</form>
-		<h3>Logout</h3>
-		<form action="/logout" method="get">
-			<input class="button" type="submit" value="Logout"/>
-		</form>
-
+		<div ng-view></div>
 	</body>
 </html>

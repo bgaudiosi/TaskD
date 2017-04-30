@@ -1,0 +1,68 @@
+<!--DOCTYPE html-->
+<html ng-app="taskd">
+	<head>
+		<title>TaskD - Make some $$$, spend some $$$</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-cookies.min.js"></script>
+		<script src="javascripts/App.js"></script>
+	</head>
+	<body>
+		<ul class="nav">
+			<li><a href="#/jobs">Jobs</a></li>
+			<li><a href="#/profile">Profile</a></li>
+			<li><a href="/logout">Logout</a></li>
+		</ul>
+		<h1>Here are the current jobs:</h1>
+		<div id="feed">
+			<table>
+				<tr class="list-group-item" ng-repeat="current in jobs">
+					<td>{{ current.title }}</td>
+					<td>{{ current.description }}</td>
+					<td>{{ current.time }} </td>
+					<td>{{ current.price }} </td>
+					<td>{{ current.owner }} </td>
+				</tr>
+			</table>
+		</div>
+		<div id="create">
+			<h3>Create Job</h3>
+			<form action='/job_create' method="post">
+				<div>
+					<label>Title:</label>
+					<input type="text" name="title"/><br/>
+				</div>
+				<div>
+					<label>Description:</label>
+					<input type="text" name="description"/><br/>
+				</div>
+				<div>
+					<label>Type:</label>
+					<input type="text" name="type"/><br/>
+				</div>
+				<div>
+					<label>Price:</label>
+					<input type="text" name="price"/><br/>
+				</div>
+				<div>
+					<label>Owner:</label>
+					<input type="text" name="owner"/><br/>
+				</div>
+				<div>
+					<input type="submit" value="Submit"/>
+				</div>
+			</form>
+		</div>
+		</br>
+		<h3>Delete Job</h3>
+			<form action='/job_delete' method="post">
+			<div>
+				<label>Title:</label>
+				<input type="text" name="title"/></br>
+			</div>
+			<div>
+				<input type="submit" value="Submit">
+			</div>
+		</form>
+	</body>
+</html>

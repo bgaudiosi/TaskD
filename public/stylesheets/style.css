@@ -70,6 +70,7 @@ input {
     text-align: center;
 }
 .user-info{
+    margin: auto;
     text-align: center;
 }
 .user-header{

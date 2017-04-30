@@ -12,11 +12,15 @@
 			<li><a href="/logout">Logout</a></li>
 		</ul>
 		</div>
+        <div class="mainCard">
 		<div class="user-info">
 		<h4 class= "user-header"> Hello {{ name }} </h4>
 		<p>{{ username }}</p>
 		<p>{{ location }}</p>
 		<p>{{ description }}</p>
 		</div>
+            
+        </div>
+        <button style="float:right; margin-right:1rem;" onclick="window.history.back()">Close</button>
 	</body>
 </html>

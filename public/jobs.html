@@ -31,7 +31,7 @@
 
 				<ul class="list-group-item" ng-repeat="current in jobs">                <div class="jobCard">
 
-                    <li>{{ current.owner }} </li>
+                    <li><a href="/#/profile/{{current.owner}}">{{ current.owner }}</a> </li>
 					<li>{{ current.title }}</li>
 					<li>{{ current.description }}</li>
 					<li>{{ current.time }} </li>

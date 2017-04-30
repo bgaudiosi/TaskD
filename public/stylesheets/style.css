@@ -67,3 +67,12 @@ input {
 .sub-head {
     text-align: center;
 }
+.user-info{
+    text-align: center;
+}
+.user-header{
+    font-weight: bold;
+}
+.mainCard {
+    text-align: center;
+}

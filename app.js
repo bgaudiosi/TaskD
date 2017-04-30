@@ -333,6 +333,7 @@ app.post('/job_update',
 app.post('/job_delete',
 	function(req, res)  {
 		var job = req.body;
+		console.log(req.body);
 		Job.findOneAndRemove({title: job.title}, function(err, gone) {
 			console.log("deleted??");
 			
